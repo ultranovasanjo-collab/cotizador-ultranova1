@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cotizador UltraNova San José</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5FA; --surface:#FFFFFF; --ink:#161B33; --muted:#5B6280; --line:#DADFEC;
+  --accent:#2A3170; --accent-ink:#FFFFFF; --gold:#B38A2E; --gold-soft:#F7ECD0;
+  --warn-bg:#FFF1D6; --warn-ink:#7A4700; --ok:#1E6B4A;
+  --art-wall:#E9ECF5; --art-glass:#F8FAFF; --art-fabric:#C9D0EA; --art-fabric2:#A9B3DB;
+  --art-line:#7C86B3; --art-metal:#B9BFD0;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1226; --surface:#181C38; --ink:#EEF0FA; --muted:#9AA1C4; --line:#2B3160;
+    --accent:#AEB8FF; --accent-ink:#0F1226; --gold:#E0B659; --gold-soft:#2E2A1B;
+    --warn-bg:#3A2D10; --warn-ink:#F3D18A; --ok:#7FD6A8;
+    --art-wall:#212649; --art-glass:#2C3260; --art-fabric:#5B66A8; --art-fabric2:#7C88C8;
+    --art-line:#9AA4DA; --art-metal:#7F88AE;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1226; --surface:#181C38; --ink:#EEF0FA; --muted:#9AA1C4; --line:#2B3160;
+  --accent:#AEB8FF; --accent-ink:#0F1226; --gold:#E0B659; --gold-soft:#2E2A1B;
+  --warn-bg:#3A2D10; --warn-ink:#F3D18A; --ok:#7FD6A8;
+  --art-wall:#212649; --art-glass:#2C3260; --art-fabric:#5B66A8; --art-fabric2:#7C88C8;
+  --art-line:#9AA4DA; --art-metal:#7F88AE;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.5;padding-bottom:84px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+h1,h2,h3{margin:0;line-height:1.2}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 16px}
+header.top{display:flex;flex-direction:column;gap:4px;padding:8px 0 18px}
+header.top h1{font-size:1.65rem;font-weight:800;letter-spacing:-.01em}
+header.top p{margin:0;color:var(--muted);font-size:.95rem}
+.badge{display:inline-block;background:var(--gold-soft);color:var(--ink);border:1px solid var(--gold);border-radius:999px;padding:2px 10px;font-size:.8rem;font-weight:600;margin-top:6px;width:fit-content}
+.layout{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 390px;align-items:start}.sticky{position:sticky;top:16px}body{padding-bottom:24px}.bar{display:none!important}}
+section.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+section.panel + section.panel{margin-top:16px}
+h2{font-size:1.1rem;font-weight:700;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.pc{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:8px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);transition:border-color .15s,box-shadow .15s}
+.pc:hover{border-color:var(--art-line)}
+.pc:focus-visible,.btn:focus-visible,input:focus-visible,.pill:focus-within,a.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.pc[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.pic{display:block;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:var(--art-wall)}
+.pic svg,.pic img{width:100%;height:100%;display:block;object-fit:cover}
+.pn{font-weight:700;font-size:.92rem;line-height:1.25}
+.pu{font-size:.78rem;color:var(--muted)}
+.cfg{display:grid;gap:16px}
+@media(min-width:720px){.cfg.has{grid-template-columns:240px 1fr}}
+.hero .pic{aspect-ratio:4/3;border:1px solid var(--line)}
+.hero h3{font-size:1.1rem;margin:10px 0 4px}
+.hero p{margin:0 0 8px;font-size:.9rem}
+.hero .lbl{font-weight:700;font-size:.82rem;color:var(--muted);display:block;margin-top:8px}
+.photo-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:10px;font-weight:700;font-size:.92rem;border:1.5px solid var(--accent);color:var(--accent);background:transparent;text-align:center}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.small{padding:6px 10px;font-size:.8rem}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{border-color:var(--line);color:var(--muted)}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.field label,.fl{font-weight:600;font-size:.85rem}
+.field small{color:var(--muted);font-size:.78rem}
+input[type=text],input[type=number],input[type=tel],textarea{font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{position:relative;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:.88rem;font-weight:600;background:var(--surface)}
+.pill input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.pill:has(input:checked){border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:.9rem}
+.chk input{width:20px;height:20px;margin-top:1px;accent-color:var(--accent)}
+.preview{border-radius:12px;padding:12px 14px;background:var(--gold-soft);border:1px solid var(--gold);margin:6px 0 12px}
+.preview .big{font-size:1.4rem;font-weight:800}
+.preview .det{font-size:.85rem;color:var(--muted)}
+.preview.warn{background:var(--warn-bg);border-color:var(--warn-ink);color:var(--warn-ink)}
+.preview.warn .det{color:inherit}
+.empty{margin:0;color:var(--muted)}
+ul.q{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.q li{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:2px 10px}
+ul.q .t{font-weight:700;font-size:.92rem}
+ul.q .d{font-size:.8rem;color:var(--muted);grid-column:1}
+ul.q .p{font-weight:800;text-align:right}
+ul.q .p.na{font-size:.8rem;color:var(--warn-ink);background:var(--warn-bg);padding:2px 8px;border-radius:8px}
+ul.q .x{grid-column:2;justify-self:end}
+.tot{display:grid;gap:4px;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.tot div{display:flex;justify-content:space-between;gap:8px}
+.tot .grand{font-size:1.35rem;font-weight:800}
+.note{font-size:.8rem;color:var(--muted);margin:8px 0 0}
+.alert{background:var(--warn-bg);color:var(--warn-ink);border-radius:10px;padding:10px 12px;font-size:.85rem;margin-top:10px}
+.actions{display:grid;gap:8px;margin-top:12px}
+textarea{min-height:170px;font-size:.82rem;line-height:1.45;resize:vertical}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:5}
+.bar b{font-size:1.15rem}
+.bar span{font-size:.8rem;color:var(--muted);display:block}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.88rem;font-weight:600;z-index:10;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+.cap{font-size:.72rem;color:var(--muted);margin-top:4px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gF" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--art-fabric)"/><stop offset="1" style="stop-color:var(--art-fabric2)"/></linearGradient>
+    <linearGradient id="gM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--art-metal)"/><stop offset=".5" stop-color="#fff" stop-opacity=".7"/><stop offset="1" style="stop-color:var(--art-line)"/></linearGradient>
+    <linearGradient id="gS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".12"/><stop offset=".25" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".10"/></linearGradient>
+    <clipPath id="dc"><circle cx="127" cy="91" r="25"/></clipPath>
+  </defs>
+</svg>
+<div class="wrap">
+  <header class="top">
+    <h1>Cotizador UltraNova</h1>
+    <p>Identifica la cortina por la foto, mide y obtén el valor de referencia.</p>
+    <span class="badge">Lista 2026 · los valores ya incluyen el 3 % de descuento</span>
+  </header>
+
+  <div class="layout">
+    <div>
+      <section class="panel" aria-labelledby="h-tipo">
+        <h2 id="h-tipo">1. ¿Qué tiene el cliente?</h2>
+        <div class="grid" id="grid"></div>
+        <p class="cap">Ilustraciones de referencia: el círculo dorado amplía el rasgo que distingue cada tipo. Puedes reemplazarlas por fotos reales de tu catálogo.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="h-cfg">
+        <h2 id="h-cfg">2. Confirma y mide</h2>
+        <div id="cfg" class="cfg"></div>
+      </section>
+    </div>
+
+    <div class="sticky" id="quote-col">
+      <section class="panel" id="quote" aria-labelledby="h-q">
+        <h2 id="h-q">3. Cotización</h2>
+        <div class="field">
+          <label for="cliente">Cliente</label>
+          <input type="text" id="cliente" placeholder="Nombre del cliente" autocomplete="off">
+        </div>
+        <ul class="q" id="items"></ul>
+        <p class="empty" id="items-empty">Aún no hay piezas. Agrega la primera desde el paso 2.</p>
+
+        <div class="chk" style="margin-top:8px">
+          <input type="checkbox" id="express">
+          <label for="express"><b>Entrega en 24 horas</b><br><small style="color:var(--muted)">Recargo único sobre el total: $ 27.200 (1 a 5 unidades) o $ 37.800 (6 a 15 unidades).</small></label>
+        </div>
+
+        <div class="tot" id="tot"></div>
+        <div id="alerts"></div>
+
+        <div class="actions">
+          <button class="btn primary" id="copy">Copiar cotización</button>
+          <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+          <button class="btn ghost" id="clear">Vaciar cotización</button>
+        </div>
+        <div class="field" style="margin-top:12px">
+          <label for="txt">Texto para el cliente</label>
+          <textarea id="txt" readonly></textarea>
+        </div>
+        <p class="note">Valor de referencia. El precio final se confirma con el diagnóstico técnico y el formato de aceptación de riesgos del material.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="bar" id="bar">
+  <div><span id="bar-n">0 piezas</span><b id="bar-t">$ 0</b></div>
+  <a class="btn primary" href="#quote">Ver cotización</a>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- utilidades ---------- */
+const $ = (s,r)=> (r||document).querySelector(s);
+const fmt = n => '$ ' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const r2 = n => Math.round(n*100)/100;
+const n2 = n => String(r2(n)).replace('.',',');
+const tier = a => a<=1 ? 0 : (a<=6 ? 1 : 2);
+const TIERN = ['hasta 1 m²','de 1 a 6 m²','más de 6 m²'];
+const MOTOR = 19400;
+
+/* ---------- ilustraciones ---------- */
+const frame = '<rect width="160" height="120" fill="var(--art-wall)"/><rect x="20" y="10" width="120" height="100" rx="2" fill="var(--art-glass)" stroke="var(--art-line)" stroke-width="1.5"/><polygon points="24,14 70,14 40,106 24,106" fill="#fff" opacity=".18"/><rect x="16" y="108" width="128" height="5" rx="1.5" fill="var(--art-line)" opacity=".7"/>';
+const svg = (inner,win=true)=> '<svg viewBox="0 0 160 120" aria-hidden="true" focusable="false">'+(win?frame:'<rect width="160" height="120" fill="var(--art-wall)"/>')+inner+'</svg>';
+const det = inner => '<circle cx="127" cy="91" r="26" fill="var(--art-glass)" stroke="var(--gold)" stroke-width="2"/><g clip-path="url(#dc)"><g transform="translate(127 91)">'+inner+'</g></g>';
+const hex = (cx,cy,r)=>[0,1,2,3,4,5].map(i=>{const a=Math.PI/3*i+Math.PI/6;return (cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1)}).join(' ');
+const rng = (n,f)=>Array.from({length:n},(_,i)=>f(i)).join('');
+const rail = '<rect x="20" y="9" width="120" height="8" rx="3" fill="url(#gM)" stroke="var(--art-line)" stroke-width=".6"/>';
+const shade = (x,y,w,h)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="url(#gS)"/>';
+const ART = {
+ enrollable:()=>svg(
+  '<rect x="24" y="17" width="112" height="64" fill="url(#gF)"/>'+shade(24,17,112,64)+
+  '<rect x="24" y="80" width="112" height="4" rx="2" fill="var(--art-line)"/>'+
+  '<rect x="20" y="9" width="120" height="9" rx="4.5" fill="url(#gM)" stroke="var(--art-line)" stroke-width=".6"/>'+
+  rng(9,i=>'<circle cx="143" cy="'+(19+i*6.5)+'" r="1.7" fill="var(--art-line)"/>')+
+  '<rect x="17" y="5" width="126" height="17" rx="3" fill="none" stroke="var(--gold)" stroke-width="1.2" stroke-dasharray="3 2"/>'+
+  '<text x="26" y="96" font-size="6.5" fill="var(--art-line)" font-family="sans-serif">tubo arriba, tela lisa</text>'+
+  det('<circle r="16" fill="url(#gF)" stroke="var(--art-line)"/><path d="M0 -14 A14 14 0 1 1 -14 0 A10 10 0 1 1 0 -10 A6 6 0 1 1 -6 0" fill="none" stroke="var(--art-line)" stroke-width="1.2"/><circle r="3" fill="var(--art-line)"/>')),
+ romana:()=>svg(
+  rail+'<rect x="24" y="17" width="112" height="20" fill="url(#gF)"/>'+
+  rng(5,i=>'<rect x="24" y="'+(36+i*11)+'" width="112" height="11" rx="5" fill="url(#gF)" stroke="var(--art-line)" stroke-width="1"/><rect x="26" y="'+(43+i*11)+'" width="108" height="3" rx="1.5" fill="#000" opacity=".12"/>')+
+  '<line x1="130" y1="17" x2="130" y2="96" stroke="var(--art-line)" stroke-width="1.2"/><circle cx="130" cy="98" r="2.6" fill="var(--gold)"/>'+
+  det('<path d="M-20 -14 q20 9 40 0 M-20 -2 q20 9 40 0 M-20 10 q20 9 40 0 M-20 22 q20 9 40 0" fill="none" stroke="var(--art-line)" stroke-width="4" stroke-linecap="round"/><path d="M-20 -14 q20 9 40 0 M-20 -2 q20 9 40 0 M-20 10 q20 9 40 0" fill="none" stroke="var(--art-fabric)" stroke-width="2" stroke-linecap="round"/>')),
+ sheer:()=>svg(
+  rail+rng(5,i=>'<rect x="24" y="'+(18+i*17)+'" width="112" height="8" fill="var(--art-fabric2)"/><rect x="24" y="'+(26+i*17)+'" width="112" height="9" fill="var(--art-fabric)" opacity=".3" stroke="var(--art-line)" stroke-width=".6" stroke-dasharray="2 2"/>')+
+  det('<rect x="-26" y="-26" width="52" height="14" fill="var(--art-fabric2)"/>'+rng(14,i=>'<line x1="-26" y1="'+(-10+i*3)+'" x2="26" y2="'+(-10+i*3)+'" stroke="var(--art-line)" stroke-width=".6" opacity=".7"/><line x1="'+(-26+i*4)+'" y1="-12" x2="'+(-26+i*4)+'" y2="26" stroke="var(--art-line)" stroke-width=".6" opacity=".7"/>')+'<text x="0" y="-16" text-anchor="middle" font-size="5" fill="var(--art-glass)" font-family="sans-serif">franja opaca</text>')),
+ royal:()=>svg(
+  rail+rng(5,i=>'<rect x="24" y="'+(18+i*17)+'" width="112" height="5" fill="var(--art-fabric2)"/><rect x="24" y="'+(23+i*17)+'" width="112" height="12" fill="var(--art-fabric)" opacity=".3" stroke="var(--art-line)" stroke-width=".6" stroke-dasharray="1.5 2.5"/><line x1="24" y1="'+(18+i*17)+'" x2="136" y2="'+(18+i*17)+'" stroke="var(--gold)" stroke-width="1"/>')+
+  det('<rect x="-26" y="-26" width="52" height="8" fill="var(--art-fabric2)"/><line x1="-26" y1="-18" x2="26" y2="-18" stroke="var(--gold)" stroke-width="1.5"/>'+rng(9,i=>'<circle cx="'+(-20+i*5)+'" cy="'+(-2+((i%2)*6))+'" r="2.2" fill="none" stroke="var(--art-line)" stroke-width=".8"/>')+rng(9,i=>'<circle cx="'+(-20+i*5)+'" cy="'+(10+((i%2)*6))+'" r="2.2" fill="none" stroke="var(--art-line)" stroke-width=".8"/>'))),
+ vertesse:()=>svg(
+  rail+rng(6,i=>{const x=24+i*19;return '<path d="M'+x+' 17 L'+(x+17)+' 17 L'+(x+17)+' 98 Q'+(x+13)+' 104 '+(x+8.5)+' 98 T'+x+' 98 Z" fill="url(#gF)" opacity=".75" stroke="var(--art-line)" stroke-width=".8"/>'})+
+  det('<path d="M-20 -26 V10 Q-14 18 -8 10 T4 10 T16 10 V-26 Z" fill="var(--art-fabric)" opacity=".75" stroke="var(--art-line)"/><line x1="-8" y1="-26" x2="-8" y2="10" stroke="var(--art-line)" stroke-width=".8"/><line x1="4" y1="-26" x2="4" y2="10" stroke="var(--art-line)" stroke-width=".8"/>')),
+ celular:()=>svg(
+  rail+'<rect x="24" y="17" width="112" height="72" fill="url(#gF)"/>'+
+  rng(6,i=>'<line x1="24" y1="'+(30+i*11)+'" x2="136" y2="'+(30+i*11)+'" stroke="var(--art-line)" stroke-width="1.3"/><line x1="24" y1="'+(31+i*11)+'" x2="136" y2="'+(31+i*11)+'" stroke="#fff" stroke-opacity=".35"/>')+
+  det('<polygon points="'+hex(-8,-8,10)+'" fill="var(--art-fabric)" stroke="var(--art-line)" stroke-width="1.2"/><polygon points="'+hex(10,-8,10)+'" fill="var(--art-fabric)" stroke="var(--art-line)" stroke-width="1.2"/><polygon points="'+hex(1,8,10)+'" fill="var(--art-fabric2)" stroke="var(--art-line)" stroke-width="1.2"/><text x="0" y="23" text-anchor="middle" font-size="5" fill="var(--art-line)" font-family="sans-serif">celdas</text>')),
+ verticales:()=>svg(
+  rail+rng(8,i=>{const x=27+i*13.5;return '<rect x="'+x+'" y="18" width="10" height="80" rx="1.5" fill="url(#gF)" stroke="var(--art-line)" stroke-width=".8" transform="rotate(7 '+(x+5)+' 18)"/>'})+
+  det('<rect x="-7" y="-14" width="14" height="42" rx="2" fill="url(#gF)" stroke="var(--art-line)"/><rect x="-9" y="-24" width="18" height="10" rx="2" fill="var(--art-line)"/><circle cx="0" cy="-19" r="2.2" fill="var(--gold)"/>')),
+ aluminio:()=>svg(
+  '<rect x="24" y="9" width="112" height="7" rx="3" fill="url(#gM)" stroke="var(--art-line)" stroke-width=".6"/>'+
+  rng(11,i=>'<rect x="24" y="'+(18+i*7.4)+'" width="112" height="5.2" rx="1.5" fill="url(#gM)"/><line x1="24" y1="'+(19+i*7.4)+'" x2="136" y2="'+(19+i*7.4)+'" stroke="#fff" stroke-opacity=".6"/>')+
+  '<line x1="38" y1="16" x2="38" y2="98" stroke="var(--art-line)" stroke-width="1"/><line x1="122" y1="16" x2="122" y2="98" stroke="var(--art-line)" stroke-width="1"/>'+
+  det('<path d="M-24 -4 Q0 -14 24 -4 Q0 2 -24 -4Z" fill="url(#gM)" stroke="var(--art-line)" stroke-width="1.2"/><path d="M-24 10 Q0 0 24 10 Q0 16 -24 10Z" fill="url(#gM)" stroke="var(--art-line)" stroke-width="1.2"/><line x1="-14" y1="-18" x2="-14" y2="22" stroke="var(--art-line)" stroke-width="1.5"/><line x1="14" y1="-18" x2="14" y2="22" stroke="var(--art-line)" stroke-width="1.5"/>')),
+ madera:()=>svg(
+  '<rect x="24" y="9" width="112" height="7" rx="3" fill="#6E4A2A"/>'+
+  rng(8,i=>'<rect x="24" y="'+(18+i*10.2)+'" width="112" height="8.5" rx="1.5" fill="#B88555"/><rect x="24" y="'+(24.5+i*10.2)+'" width="112" height="2" fill="#8A5D34"/><path d="M32 '+(21+i*10.2)+' h20 M66 '+(22+i*10.2)+' h26 M100 '+(21+i*10.2)+' h18" stroke="#8A5D34" stroke-width=".7" opacity=".8"/>')+
+  '<line x1="36" y1="16" x2="36" y2="98" stroke="var(--art-line)" stroke-width="1"/><line x1="124" y1="16" x2="124" y2="98" stroke="var(--art-line)" stroke-width="1"/>'+
+  det('<rect x="-26" y="-26" width="52" height="52" fill="#B88555"/>'+rng(8,i=>'<path d="M-26 '+(-22+i*6.5)+' q13 -4 26 0 t26 0" fill="none" stroke="#8A5D34" stroke-width=".9"/>')+'<ellipse cx="8" cy="4" rx="4" ry="2.5" fill="none" stroke="#6E4A2A" stroke-width=".9"/>')),
+ tradicional:()=>svg(
+  '<line x1="14" y1="15" x2="146" y2="15" stroke="var(--art-line)" stroke-width="2.5"/><circle cx="14" cy="15" r="3.2" fill="var(--gold)"/><circle cx="146" cy="15" r="3.2" fill="var(--gold)"/>'+
+  rng(7,i=>'<circle cx="'+(30+i*16)+'" cy="19" r="2.2" fill="none" stroke="var(--art-line)"/>')+
+  '<path d="M24 20 H66 L62 108 H24 Z" fill="url(#gF)"/><path d="M94 20 H136 L136 108 H98 Z" fill="url(#gF)"/>'+
+  '<path d="M33 20 C36 55 30 85 33 108 M43 20 C46 55 40 85 43 108 M53 20 C56 55 50 85 53 108 M107 20 C104 55 110 85 107 108 M117 20 C114 55 120 85 117 108 M127 20 C124 55 130 85 127 108" fill="none" stroke="var(--art-line)" stroke-width="1"/>'+
+  '<path d="M24 62 Q44 72 64 62" fill="none" stroke="var(--gold)" stroke-width="2.2"/><path d="M96 62 Q116 72 136 62" fill="none" stroke="var(--gold)" stroke-width="2.2"/>'+
+  det('<line x1="-26" y1="-18" x2="26" y2="-18" stroke="var(--art-line)" stroke-width="3"/><circle cx="0" cy="-18" r="7" fill="none" stroke="var(--gold)" stroke-width="2"/><path d="M-14 -12 C-10 6 -18 14 -14 26 M-2 -12 C2 6 -6 14 -2 26 M10 -12 C14 6 6 14 10 26" fill="none" stroke="var(--art-line)" stroke-width="2"/>')),
+ galeria:()=>svg(
+  '<line x1="14" y1="15" x2="146" y2="15" stroke="var(--art-line)" stroke-width="2.5"/>'+
+  rng(4,i=>{const x=22+i*29;return '<path d="M'+x+' 17 Q'+(x+14.5)+' 60 '+(x+29)+' 17 Z" fill="url(#gF)" stroke="var(--art-line)" stroke-width="1"/>'})+
+  '<path d="M22 17 L32 88 L44 17 Z" fill="var(--art-fabric2)" stroke="var(--art-line)" stroke-width=".8"/><path d="M116 17 L128 88 L138 17 Z" fill="var(--art-fabric2)" stroke="var(--art-line)" stroke-width=".8"/>'+
+  det('<path d="M-26 -8 q6.5 18 13 0 t13 0 t13 0 t13 0 V-26 H-26Z" fill="url(#gF)" stroke="var(--art-line)" stroke-width="1.2"/>')),
+ tapete:()=>svg(
+  '<rect x="26" y="22" width="108" height="76" rx="3" fill="url(#gF)" stroke="var(--art-line)"/>'+
+  '<rect x="34" y="30" width="92" height="60" fill="none" stroke="var(--gold)" stroke-width="1.6"/>'+
+  '<polygon points="80,36 112,60 80,84 48,60" fill="var(--art-fabric2)" stroke="var(--art-line)"/>'+
+  rng(15,i=>'<line x1="'+(30+i*7)+'" y1="22" x2="'+(30+i*7)+'" y2="16" stroke="var(--art-line)"/><line x1="'+(30+i*7)+'" y1="98" x2="'+(30+i*7)+'" y2="104" stroke="var(--art-line)"/>')+
+  det(rng(11,i=>'<line x1="'+(-22+i*4.4)+'" y1="14" x2="'+(-23+i*4.4)+'" y2="-12" stroke="var(--art-line)" stroke-width="1.4" stroke-linecap="round"/>')+'<rect x="-26" y="14" width="52" height="12" fill="var(--art-fabric2)"/><text x="0" y="-18" text-anchor="middle" font-size="5" fill="var(--art-line)" font-family="sans-serif">pelo: corto = liso</text>'),false),
+ panel:()=>svg(
+  '<rect x="20" y="9" width="120" height="3" fill="var(--art-line)"/><rect x="20" y="13" width="120" height="3" fill="var(--art-line)"/>'+
+  '<rect x="24" y="17" width="44" height="82" fill="var(--art-fabric2)" stroke="var(--art-line)"/>'+
+  '<rect x="58" y="17" width="44" height="82" fill="url(#gF)" stroke="var(--art-line)" opacity=".95"/>'+
+  '<rect x="92" y="17" width="44" height="82" fill="var(--art-fabric2)" stroke="var(--art-line)" opacity=".85"/>'+
+  '<line x1="24" y1="94" x2="68" y2="94" stroke="var(--art-line)"/><line x1="58" y1="94" x2="102" y2="94" stroke="var(--art-line)"/>'+
+  det('<rect x="-26" y="-22" width="52" height="4" fill="var(--art-line)"/><rect x="-26" y="-16" width="52" height="4" fill="var(--art-line)"/><rect x="-8" y="-12" width="16" height="9" fill="var(--gold)"/><rect x="-18" y="-3" width="36" height="26" fill="url(#gF)" stroke="var(--art-line)"/><text x="0" y="14" text-anchor="middle" font-size="5" fill="var(--art-line)" font-family="sans-serif">velcro</text>'))
+};
+
+/* ---------- catálogo (fuente: Lista de precios 2026) ---------- */
+const P = [
+ {id:'enrollable',name:'Enrollable',unit:'por pieza · según m²',kind:'area',art:'enrollable',motor:true,
+  variants:[{n:'Sin casetera',p:[23300,43700,53400],corte:24300},{n:'Con casetera',p:[26200,48500,58200],corte:29100}],
+  tip:'Una sola tela lisa que se enrolla en un tubo arriba, sin pliegues. Se maneja con cadena o motor.',
+  confunde:'Si al subir se recoge en pliegues horizontales es Romana. Si tiene franjas translúcidas y opacas es Sheer.',
+  nota:'Mira si hay una caja que cubre el tubo (casetera): cambia el precio. El lavado incluye refilada si la tela viene deshilada.'},
+ {id:'romana',name:'Romana (Viewtex)',unit:'por pieza · según m²',kind:'area',art:'romana',motor:true,
+  variants:[{n:'Estándar',p:[41700,69800,72800],corte:31000}],
+  tip:'Al subir, la tela se recoge en pliegues horizontales apilados. Se maneja con cordón.',
+  confunde:'El enrollable sube sin pliegues; la romana forma pliegues.',
+  nota:'El servicio incluye cambio de cordón, guías de cordón y tapas de perfil pliegue cuando estén deterioradas.'},
+ {id:'sheer-e',name:'Sheer Elegance',unit:'por pieza · según m²',kind:'area',art:'sheer',motor:true,
+  variants:[{n:'Estándar',p:[41700,82500,87300],corte:58200}],
+  tip:'Franjas horizontales de tela translúcida alternadas con franjas opacas, para regular la luz.',
+  confunde:'El enrollable es tela lisa sin franjas. La celular se ve como panal de canto.',
+  nota:'Elegance y Royal-Nuance tienen valores distintos: confirma el nombre en la etiqueta o en el muestrario. El lavado incluye refilada si la tela viene deshilada.'},
+ {id:'sheer-r',name:'Sheer Royal - Nuance',unit:'por pieza · según m²',kind:'area',art:'royal',motor:true,
+  variants:[{n:'Estándar',p:[62100,101900,111600],corte:67900}],
+  tip:'Otra línea de sheer, de valor más alto que Elegance. Se distingue por el nombre en la etiqueta o el muestrario.',
+  confunde:'Se parece a Sheer Elegance a simple vista. No cotices sin confirmar el nombre.',
+  nota:'Si no puedes confirmar la línea, pide foto de la etiqueta.'},
+ {id:'vertesse',name:'Vertesse (sheer vertical)',unit:'por pieza · según medida',kind:'vertesse',art:'vertesse',motor:true,
+  tip:'Velos verticales de tela suave y translúcida que cuelgan de un riel superior.',
+  confunde:'Las Verticales son lamas rígidas; Vertesse son telas suaves y translúcidas.',
+  nota:'Hasta 1 m² un valor; hasta 3 m de ancho otro. Cada 50 cm adicionales tiene recargo y el asesor lo confirma.'},
+ {id:'celular',name:'Cortina celular',unit:'por pieza · según m²',kind:'area',art:'celular',motor:true,
+  variants:[{n:'Sencilla (velo o blackout)',p:[82500,155200,166800]},{n:'Doble (velo + blackout)',p:[113500,165900,189200]}],
+  tip:'Estructura tipo panal: de canto se ven celdas. Sencilla es una sola capa; Doble lleva velo y blackout.',
+  confunde:'Se ve plisada, pero a diferencia de la Romana no se enrolla ni se recoge en pliegues anchos.',
+  nota:'Cuenta las capas: una sola es Sencilla, velo + blackout es Doble.'},
+ {id:'verticales',name:'Verticales (lamas)',unit:'por lama',kind:'lamas',art:'verticales',
+  tip:'Lamas verticales rígidas colgadas de un riel; giran para regular la luz.',
+  confunde:'Vertesse usa telas suaves y translúcidas. Aquí son lamas firmes.',
+  nota:'Con más de 100 lamas en el pedido, todas se cobran a $ 4.500. El riel (lavado, cambio de cordón y lubricación) se cobra aparte.'},
+ {id:'aluminio',name:'Persiana de aluminio',unit:'por pieza · según m²',kind:'area',art:'aluminio',
+  variants:[{n:'Estándar',p:[46600,67900,73700]}],
+  extra:{n:'Cambio de cordón o escalerilla',p:43700},
+  tip:'Lamas horizontales metálicas, con escalerilla y cordón.',
+  confunde:'Si las lamas son de madera es Persiana de madera.',
+  nota:'El cambio de cordón o escalerilla es mano de obra aparte, por persiana.'},
+ {id:'madera',name:'Persiana de madera',unit:'por pieza · según m²',kind:'area',art:'madera',
+  variants:[{n:'Estándar',p:[null,82500,99900]}],
+  extra:{n:'Cambio de cordón o escalerilla',p:43700},
+  tip:'Lamas horizontales de madera.',
+  confunde:'Si las lamas son metálicas es Persiana de aluminio.',
+  nota:'Es limpieza y lubricación. Menos de 1 m² no tiene tarifa: lo cotiza el asesor.'},
+ {id:'trad',name:'Cortina tradicional',unit:'por metro lineal',kind:'ml',art:'tradicional',motor:true,
+  variants:[{n:'Velo',r:10700},{n:'Pesada',r:13600},{n:'Forrada',r:24300}],
+  tip:'Tela con ondas o pliegues, colgada de una barra o riel.',
+  confunde:'Una galería es la cenefa decorativa de arriba, no la cortina completa.',
+  nota:'Terciopelo, seda o forro pesado no se lava aquí: se tercerizan y los cotiza el asesor.'},
+ {id:'galeria',name:'Galería',unit:'por pieza · hasta 3 ML',kind:'galeria',art:'galeria',
+  variants:[{n:'Ondas y cascadas',p:93100},{n:'Tapizada',p:70800}],
+  tip:'Cenefa decorativa en la parte alta de la ventana, con ondas, cascadas o tapizada.',
+  confunde:'No es la cortina que cae hasta abajo: es el adorno superior.',
+  nota:'La tarifa es hasta 3 ML. Más de 3 ML lo cotiza el asesor.'},
+ {id:'tapete',name:'Tapete',unit:'por m²',kind:'tapete',art:'tapete',
+  variants:[{n:'Liso',r:44600},{n:'Peludo',r:53400}],
+  tip:'Tapete de piso. Liso es de pelo corto y parejo; peludo es de pelo largo.',
+  confunde:'Si dudas entre liso y peludo, pide foto: cambia el valor por m².',
+  nota:'Mide ancho y largo del tapete.'},
+ {id:'panel',name:'Panel japonés',unit:'por telo / servicio',kind:'panel',art:'panel',
+  tip:'Paneles planos de tela (telos) que se deslizan en un riel de varias vías.',
+  confunde:'No se enrolla ni se pliega: cada telo es una lámina plana.',
+  nota:'Cuenta los telos. El riel (lavado, cambio de cordón y lubricación) se cobra aparte.'}
+];
+
+/* ---------- fotos propias (opcional, quedan en este dispositivo) ---------- */
+const photos = {};
+function loadPhotos(){ P.forEach(p=>{ try{ const v=localStorage.getItem('unp:'+p.id); if(v) photos[p.id]=v; }catch(e){} }); }
+function savePhoto(id,file){
+  const fr=new FileReader();
+  fr.onload=()=>{ const img=new Image(); img.onload=()=>{
+    const s=Math.min(1,520/img.width); const c=document.createElement('canvas');
+    c.width=Math.round(img.width*s); c.height=Math.round(img.height*s);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    const data=c.toDataURL('image/jpeg',.72); photos[id]=data;
+    let saved=true; try{ localStorage.setItem('unp:'+id,data);}catch(e){ saved=false; }
+    renderCatalog(); renderCfg(false); toast(saved?'Foto guardada en este dispositivo':'Foto cargada solo para esta sesión');
+  }; img.src=fr.result; };
+  fr.readAsDataURL(file);
+}
+function removePhoto(id){ delete photos[id]; try{localStorage.removeItem('unp:'+id);}catch(e){} renderCatalog(); renderCfg(false); }
+const pic = p => photos[p.id] ? '<img alt="Foto de '+p.name+'" src="'+photos[p.id]+'">' : ART[p.art]();
+
+/* ---------- estado ---------- */
+let sel = null, uid = 0, lastCfg = {};
+const quote = [];
+
+/* ---------- catálogo ---------- */
+function renderCatalog(){
+  $('#grid').innerHTML = P.map(p=>
+    '<button type="button" class="pc" data-id="'+p.id+'" aria-pressed="'+(sel&&sel.id===p.id?'true':'false')+'">'+
+    '<span class="pic">'+pic(p)+'</span><span class="pn">'+p.name+'</span><span class="pu">'+p.unit+'</span></button>').join('');
+}
+$('#grid').addEventListener('click',e=>{
+  const b=e.target.closest('.pc'); if(!b) return;
+  sel=P.find(x=>x.id===b.dataset.id); lastCfg={v:0};
+  renderCatalog(); renderCfg(true);
+});
+
+/* ---------- formulario ---------- */
+function renderCfg(scroll){
+  const box=$('#cfg');
+  if(!sel){ box.className='cfg'; box.innerHTML='<p class="empty">Toca el tipo de cortina del cliente. Compara la foto y las pistas antes de medir: es la mejor forma de evitar errores de precio.</p>'; return; }
+  const p=sel; box.className='cfg has';
+  const v = p.variants||[];
+  let f='';
+  if(v.length>1){
+    f+='<div class="field"><span class="fl">Variante</span><div class="pills" role="radiogroup" aria-label="Variante">'+
+      v.map((x,i)=>'<label class="pill"><input type="radio" name="variant" value="'+i+'" '+(i===(lastCfg.v||0)?'checked':'')+'>'+x.n+'</label>').join('')+'</div></div>';
+  }
+  const num=(id,label,hint,ph)=>'<div class="field"><label for="'+id+'">'+label+'</label><input type="number" inputmode="decimal" step="any" min="0" id="'+id+'" placeholder="'+(ph||'0,00')+'">'+(hint?'<small>'+hint+'</small>':'')+'</div>';
+  const chk=(id,label)=>'<label class="chk"><input type="checkbox" id="'+id+'"><span>'+label+'</span></label>';
+  switch(p.kind){
+    case 'area': case 'vertesse':
+      f+='<div class="row2">'+num('ancho','Ancho (m)','')+num('alto','Alto (m)','')+'</div>'; break;
+    case 'tapete':
+      f+='<div class="row2">'+num('ancho','Ancho (m)','')+num('alto','Largo (m)','')+'</div>'; break;
+    case 'ml': f+=num('ml','Metros lineales (ML)','Ancho total de la tela'); break;
+    case 'galeria': f+=num('ml','Metros lineales (ML)','La tarifa cubre hasta 3 ML'); break;
+    case 'lamas': f+=num('lamas','Cantidad de lamas','Cuenta todas las lamas del pedido','0'); break;
+    case 'panel': f+='<div class="row3">'+num('telos','Telos (lavado)','','0')+num('velcro','Cambio de velcro','','0')+num('cortes','Cortes','','0')+'</div>'; break;
+  }
+  if(['area','vertesse','tapete','ml','galeria'].includes(p.kind)){
+    f+='<div class="field"><label for="qty">Piezas iguales</label><input type="number" inputmode="numeric" min="1" step="1" id="qty" value="1"></div>';
+  }
+  if(p.kind==='area' && v[0] && v[0].corte){ f+=chk('corte','Incluye corte (ancho o alto)'); }
+  if(p.extra){ f+=chk('extra',p.extra.n+' ('+fmt(p.extra.p)+')'); }
+  if(p.motor){ f+=chk('motor','Motorizada (recargo '+fmt(MOTOR)+' por cortina)'); }
+  if(p.kind==='lamas'||p.kind==='panel'){ f+=chk('riel','Lavado de riel, cambio de cordón y lubricación ('+fmt(72800)+')'); }
+  if(p.kind==='ml'){ f+=chk('delicado','Es terciopelo, seda o forro pesado'); }
+
+  box.innerHTML=
+   '<div class="hero"><span class="pic">'+pic(p)+'</span><h3>'+p.name+'</h3>'+
+   '<p>'+p.tip+'</p><span class="lbl">Se confunde con</span><p>'+p.confunde+'</p><span class="lbl">Ten en cuenta</span><p>'+p.nota+'</p>'+
+   '<div class="photo-actions"><label class="btn small ghost" for="photo-in">'+(photos[p.id]?'Cambiar foto':'Usar mi foto')+'</label>'+
+   '<input type="file" id="photo-in" accept="image/*" class="sr">'+
+   (photos[p.id]?'<button type="button" class="btn small ghost" id="photo-rm">Quitar foto</button>':'')+'</div></div>'+
+   '<div><div id="form">'+f+'</div><div class="preview" id="preview"></div>'+
+   '<button type="button" class="btn primary" id="add" style="width:100%">Agregar a la cotización</button></div>';
+
+  $('#photo-in').addEventListener('change',e=>{ if(e.target.files[0]) savePhoto(p.id,e.target.files[0]); });
+  const rm=$('#photo-rm'); if(rm) rm.addEventListener('click',()=>removePhoto(p.id));
+  $('#form').addEventListener('input',update); $('#form').addEventListener('change',update);
+  $('#add').addEventListener('click',addItem);
+  update();
+  if(scroll){ const h=$('#h-cfg'); if(h && window.innerWidth<980) h.scrollIntoView({block:'start'}); }
+}
+
+function read(){
+  const g=id=>{const el=$('#'+id); if(!el) return 0; const x=parseFloat(String(el.value).replace(',','.')); return isFinite(x)&&x>0?x:0;};
+  const c=$('#form input[name=variant]:checked');
+  const b=id=>{const el=$('#'+id); return !!(el&&el.checked);};
+  const q=Math.max(1,Math.floor(g('qty'))||1);
+  return {v:c?parseInt(c.value,10):0,ancho:g('ancho'),alto:g('alto'),ml:g('ml'),lamas:Math.floor(g('lamas')),telos:Math.floor(g('telos')),velcro:Math.floor(g('velcro')),cortes:Math.floor(g('cortes')),qty:q,
+          corte:b('corte'),extra:b('extra'),motor:b('motor'),riel:b('riel'),delicado:b('delicado')};
+}
+
+/* ---------- cálculo ---------- */
+function calc(p,c){
+  const v = p.variants ? p.variants[c.v||0] : null;
+  const r={label:p.name+(v&&p.variants.length>1?' · '+v.n:''),detail:'',unit:0,qty:c.qty,total:0,units:c.qty,derivar:null,warn:[],ok:true};
+  const extras=[];
+  const addMotor=()=>{ if(c.motor){ r.unit+=MOTOR; extras.push('motorizada'); } };
+  switch(p.kind){
+    case 'area':{
+      if(!c.ancho||!c.alto) return {ok:false,msg:'Ingresa ancho y alto en metros.'};
+      const a=r2(c.ancho*c.alto), t=tier(a), base=v.p[t];
+      r.detail=n2(c.ancho)+' × '+n2(c.alto)+' m = '+n2(a)+' m² ('+TIERN[t]+')';
+      if(base==null){ r.derivar='Madera de menos de 1 m²: la cotiza el asesor.'; r.unit=0; break; }
+      r.unit=base;
+      if(c.corte&&v.corte){ r.unit+=v.corte; extras.push('corte'); }
+      if(c.extra&&p.extra){ r.unit+=p.extra.p; extras.push('cordón/escalerilla'); }
+      addMotor(); break; }
+    case 'vertesse':{
+      if(!c.ancho||!c.alto) return {ok:false,msg:'Ingresa ancho y alto en metros.'};
+      const a=r2(c.ancho*c.alto);
+      r.detail=n2(c.ancho)+' × '+n2(c.alto)+' m = '+n2(a)+' m²';
+      if(a<=1){ r.unit=93100; }
+      else {
+        r.unit=184300;
+        if(c.ancho>3){
+          const k=Math.ceil(r2(c.ancho-3)/0.5);
+          r.unit+=k*28800; extras.push(k+' × 50 cm adicionales');
+          r.warn.push('Más de 3 m de ancho: valor con recargo de lista; el asesor debe confirmarlo.');
+        }
+      }
+      addMotor(); break; }
+    case 'tapete':{
+      if(!c.ancho||!c.alto) return {ok:false,msg:'Ingresa ancho y largo en metros.'};
+      const a=r2(c.ancho*c.alto);
+      r.detail=n2(c.ancho)+' × '+n2(c.alto)+' m = '+n2(a)+' m² a '+fmt(v.r);
+      r.unit=Math.round(a*v.r); break; }
+    case 'ml':{
+      if(!c.ml) return {ok:false,msg:'Ingresa los metros lineales.'};
+      r.detail=n2(c.ml)+' ML a '+fmt(v.r);
+      if(c.delicado){ r.derivar='Terciopelo, seda o forro pesado: se terceriza y lo cotiza el asesor.'; break; }
+      r.unit=Math.round(c.ml*v.r); addMotor(); break; }
+    case 'galeria':{
+      if(!c.ml) return {ok:false,msg:'Ingresa los metros lineales.'};
+      r.detail=n2(c.ml)+' ML';
+      if(c.ml>3){ r.derivar='Galería de más de 3 ML: la cotiza el asesor.'; break; }
+      r.unit=v.p; break; }
+    case 'lamas':{
+      if(!c.lamas) return {ok:false,msg:'Ingresa la cantidad de lamas.'};
+      const rate=c.lamas>100?4500:5500;
+      r.qty=1; r.units=1;
+      r.detail=c.lamas+' lamas a '+fmt(rate)+(c.lamas>100?' (tarifa por más de 100)':'');
+      r.unit=c.lamas*rate;
+      if(c.riel){ r.unit+=72800; extras.push('riel'); } break; }
+    case 'panel':{
+      if(!c.telos&&!c.velcro&&!c.cortes&&!c.riel) return {ok:false,msg:'Ingresa al menos un servicio.'};
+      r.qty=1; r.units=1;
+      const parts=[]; let u=0;
+      if(c.telos){ u+=c.telos*18400; parts.push(c.telos+' telos'); }
+      if(c.velcro){ u+=c.velcro*6800; parts.push(c.velcro+' velcro'); }
+      if(c.cortes){ u+=c.cortes*6300; parts.push(c.cortes+' cortes'); }
+      if(c.riel){ u+=72800; parts.push('riel'); }
+      r.unit=u; r.detail=parts.join(' · '); break; }
+  }
+  if(extras.length) r.detail+=' + '+extras.join(', ');
+  r.total=r.derivar?0:r.unit*r.qty;
+  return r;
+}
+
+function update(){
+  if(!sel) return;
+  const c=read(); lastCfg.v=c.v;
+  const r=calc(sel,c), pv=$('#preview'), add=$('#add');
+  if(!r.ok){ pv.className='preview'; pv.innerHTML='<div class="det">'+r.msg+'</div>'; add.disabled=true; return; }
+  add.disabled=false;
+  if(r.derivar){ pv.className='preview warn'; pv.innerHTML='<div class="big">Lo cotiza el asesor</div><div class="det">'+r.derivar+'</div>'; return; }
+  pv.className='preview'+(r.warn.length?' warn':'');
+  pv.innerHTML='<div class="big">'+fmt(r.total)+'</div><div class="det">'+r.detail+(r.qty>1?' · '+r.qty+' piezas a '+fmt(r.unit):'')+'</div>'+(r.warn.length?'<div class="det">'+r.warn.join(' ')+'</div>':'');
+}
+
+function addItem(){
+  const c=read(), r=calc(sel,c); if(!r.ok) return;
+  r.id=++uid; quote.push(r); renderQuote(); toast('Agregado a la cotización');
+  const keep=lastCfg.v; $('#form').querySelectorAll('input[type=number]').forEach(i=>{ i.value = i.id==='qty'?'1':''; });
+  $('#form').querySelectorAll('input[type=checkbox]').forEach(i=>{ i.checked=false; });
+  lastCfg.v=keep; update();
+  const first=$('#form input[type=number]'); if(first) first.focus();
+}
+
+/* ---------- cotización ---------- */
+function totals(){
+  const sub=quote.reduce((s,i)=>s+i.total,0);
+  const units=quote.reduce((s,i)=>s+(i.derivar?0:i.units),0);
+  const exp=$('#express').checked;
+  let ex=0, exNote='';
+  if(exp && quote.length){
+    if(units<=5) ex=27200; else if(units<=15) ex=37800; else exNote='Express de más de 15 unidades: lo cotiza el asesor.';
+  }
+  return {sub,units,ex,exNote,total:sub+ex,pend:quote.filter(i=>i.derivar)};
+}
+
+function renderQuote(){
+  const T=totals();
+  $('#items-empty').style.display=quote.length?'none':'block';
+  $('#items').innerHTML=quote.map(i=>
+    '<li><span class="t">'+i.label+(i.qty>1?' × '+i.qty:'')+'</span>'+
+    (i.derivar?'<span class="p na">Asesor</span>':'<span class="p">'+fmt(i.total)+'</span>')+
+    '<span class="d">'+i.detail+'</span><button type="button" class="btn small ghost x" data-rm="'+i.id+'" aria-label="Quitar '+i.label+'">Quitar</button></li>').join('');
+  let h='<div><span>Subtotal</span><span>'+fmt(T.sub)+'</span></div>';
+  if(T.ex) h+='<div><span>Entrega en 24 h</span><span>'+fmt(T.ex)+'</span></div>';
+  h+='<div class="grand"><span>Total de referencia</span><span>'+fmt(T.total)+'</span></div>';
+  $('#tot').innerHTML=h;
+  let a='';
+  T.pend.forEach(i=>{ a+='<div class="alert"><b>'+i.label+':</b> '+i.derivar+'</div>'; });
+  quote.forEach(i=>i.warn.forEach(w=>{ a+='<div class="alert"><b>'+i.label+':</b> '+w+'</div>'; }));
+  if(T.exNote) a+='<div class="alert">'+T.exNote+'</div>';
+  $('#alerts').innerHTML=a;
+  const txt=buildText(T); $('#txt').value=txt;
+  $('#wa').href='https://wa.me/?text='+encodeURIComponent(txt);
+  $('#bar-n').textContent=quote.length+(quote.length===1?' pieza':' piezas');
+  $('#bar-t').textContent=fmt(T.total);
+  $('#copy').disabled=!quote.length; $('#clear').disabled=!quote.length;
+}
+
+function buildText(T){
+  if(!quote.length) return '';
+  const nm=$('#cliente').value.trim();
+  let t='UltraNova San José · Valor de referencia\n';
+  if(nm) t+='Cliente: '+nm+'\n';
+  t+='\n';
+  quote.forEach(i=>{ t+='• '+i.label+(i.qty>1?' × '+i.qty:'')+' ('+i.detail+'): '+(i.derivar?'por definir con asesor':fmt(i.total))+'\n'; });
+  if(T.ex) t+='• Entrega en 24 horas: '+fmt(T.ex)+'\n';
+  t+='\nTotal de referencia: '+fmt(T.total)+'\n';
+  if(T.pend.length||T.exNote) t+='(Incluye conceptos por definir con un asesor.)\n';
+  t+='\nEste valor es una referencia y se confirma con el diagnóstico técnico. Los riesgos propios de cada material (destiñe, encogimiento, deformación) se informan y se firman en el formato de aceptación antes de cobrar.';
+  return t;
+}
+
+$('#items').addEventListener('click',e=>{ const b=e.target.closest('[data-rm]'); if(!b) return; const id=+b.dataset.rm; const k=quote.findIndex(x=>x.id===id); if(k>-1) quote.splice(k,1); renderQuote(); });
+$('#express').addEventListener('change',renderQuote);
+$('#cliente').addEventListener('input',renderQuote);
+$('#clear').addEventListener('click',()=>{ quote.length=0; $('#express').checked=false; renderQuote(); });
+$('#copy').addEventListener('click',()=>{
+  const t=$('#txt').value; if(!t) return;
+  const fallback=()=>{ const ta=$('#txt'); ta.removeAttribute('readonly'); ta.select(); try{ document.execCommand('copy'); toast('Cotización copiada'); }catch(e){ toast('Selecciona el texto y cópialo'); } ta.setAttribute('readonly',''); };
+  try{ navigator.clipboard.writeText(t).then(()=>toast('Cotización copiada'),fallback); }catch(e){ fallback(); }
+});
+
+let tt; function toast(m){ const el=$('#toast'); el.textContent=m; el.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove('on'),1800); }
+
+/* ---------- inicio ---------- */
+loadPhotos(); renderCatalog(); renderCfg(false); renderQuote();
+})();
+</script>
+</body>
+</html>
