@@ -200,6 +200,7 @@ const n2 = n => String(r2(n)).replace('.',',');
 const tier = a => a<=1 ? 0 : (a<=6 ? 1 : 2);
 const TIERN = ['hasta 1 m²','de 1 a 6 m²','más de 6 m²'];
 const MOTOR = 40000;
+const CASETERA = 60000;
 
 /* ---------- ilustraciones ---------- */
 const frame = '<rect width="160" height="120" fill="var(--art-wall)"/><rect x="20" y="10" width="120" height="100" rx="2" fill="var(--art-glass)" stroke="var(--art-line)" stroke-width="1.5"/><polygon points="24,14 70,14 40,106 24,106" fill="#fff" opacity=".18"/><rect x="16" y="108" width="128" height="5" rx="1.5" fill="var(--art-line)" opacity=".7"/>';
@@ -278,7 +279,7 @@ const ART = {
 
 /* ---------- catálogo (fuente: Lista de precios 2026) ---------- */
 const P = [
- {id:'enrollable',name:'Enrollable',unit:'por pieza · según m²',kind:'area',art:'enrollable',motor:true,
+ {id:'enrollable',name:'Enrollable',unit:'por pieza · según m²',kind:'area',casetera:true,art:'enrollable',motor:true,
   variants:[{n:'Sin casetera',p:[31500,59000,72100]},{n:'Con casetera',p:[35400,65500,78600]}],
   kits:[{n:'Kit mecanismo de cadena',p:14900},{n:'Kit de mando',p:45000}],
   tip:'Una sola tela lisa que se enrolla en un tubo arriba, sin pliegues. Se maneja con cadena o motor.',
@@ -290,13 +291,13 @@ const P = [
   tip:'Al subir, la tela se recoge en pliegues horizontales apilados. Se maneja con cordón.',
   confunde:'El enrollable sube sin pliegues; la romana forma pliegues.',
   nota:'El kit de mecanismo (cadena continua o semiautomático) se agrega aparte si el cliente lo necesita.'},
- {id:'sheer-e',name:'Sheer Elegance',unit:'por pieza · según m²',kind:'area',art:'sheer',motor:true,
+ {id:'sheer-e',name:'Sheer Elegance',unit:'por pieza · según m²',kind:'area',casetera:true,art:'sheer',motor:true,
   variants:[{n:'Estándar',p:[56300,111400,117900]}],
   kits:[{n:'Kit mecanismo de cadena (el mismo del Enrollable)',p:14900},{n:'Kit de mando',p:45000}],
   tip:'Franjas horizontales de tela translúcida alternadas con franjas opacas, para regular la luz.',
   confunde:'El enrollable es tela lisa sin franjas. La celular se ve como panal de canto.',
-  nota:'Elegance y Royal-Nuance tienen valores distintos: confirma el nombre en la etiqueta o en el muestrario. El lavado incluye refilada si la tela viene deshilada.'},
- {id:'sheer-r',name:'Sheer Royal - Nuance',unit:'por pieza · según m²',kind:'area',art:'royal',motor:true,
+  nota:'Elegance y Royal-Nuance tienen valores distintos: confirma el nombre en la etiqueta o en el muestrario.'},
+ {id:'sheer-r',name:'Sheer Royal - Nuance',unit:'por pieza · según m²',kind:'area',casetera:true,art:'royal',motor:true,
   variants:[{n:'Estándar',p:[83800,137600,150700]}],
   kits:[{n:'Kit de mando',p:45000}],
   tip:'Otra línea de sheer, de valor más alto que Elegance. Se distingue por el nombre en la etiqueta o el muestrario.',
@@ -306,7 +307,7 @@ const P = [
   tip:'Velos verticales de tela suave y translúcida que cuelgan de un riel superior.',
   confunde:'Las Verticales son lamas rígidas; Vertesse son telas suaves y translúcidas.',
   nota:'Hasta 1 m² un valor; hasta 3 m de ancho otro. Cada 50 cm adicionales tiene recargo y el asesor lo confirma.'},
- {id:'celular',name:'Cortina celular',unit:'por pieza · según m²',kind:'area',art:'celular',motor:true,
+ {id:'celular',name:'Cortina celular',unit:'por pieza · según m²',kind:'area',casetera:true,art:'celular',motor:true,
   variants:[{n:'Sencilla (velo o blackout)',p:[111400,209500,225200]},{n:'Doble (velo + blackout)',p:[153200,224000,255400]}],
   kits:[{n:'Kit de mando',p:45000}],
   tip:'Estructura tipo panal: de canto se ven celdas. Sencilla es una sola capa; Doble lleva velo y blackout.',
@@ -414,6 +415,7 @@ function renderCfg(scroll){
     f+='<div class="field"><label for="qty">Piezas iguales</label><input type="number" inputmode="numeric" min="1" step="1" id="qty" value="1"></div>';
   }
   if(p.extra){ f+=chk('extra',p.extra.n+' ('+fmt(p.extra.p)+')'); }
+  if(p.casetera){ f+='<div class="field"><span class="fl">Casetera nueva</span><div class="pills" role="radiogroup" aria-label="Casetera nueva"><label class="pill"><input type="radio" name="cas" value="0" checked>Sin casetera</label><label class="pill"><input type="radio" name="cas" value="1">Con casetera</label></div><small>Con casetera: '+fmt(CASETERA)+' por metro lineal (se cobra sobre el ancho).</small></div>'; }
   (p.kits||[]).forEach((k,i)=>{ f+=num('kit'+i,k.n+' ('+fmt(k.p)+' c/u)','Cantidad de kits, solo si el cliente lo necesita','0'); });
   if(p.motor){ f+=chk('motor','Motorizada (recargo '+fmt(MOTOR)+' por cortina)'); }
   if(p.kind==='lamas'||p.kind==='panel'){ f+=chk('riel','Lavado de riel, cambio de cordón y lubricación ('+fmt(98300)+')'); }
@@ -441,7 +443,7 @@ function read(){
   const c=$('#form input[name=variant]:checked');
   const b=id=>{const el=$('#'+id); return !!(el&&el.checked);};
   const q=Math.max(1,Math.floor(g('qty'))||1);
-  return {v:c?parseInt(c.value,10):0,ancho:g('ancho'),alto:g('alto'),ml:g('ml'),lamas:Math.floor(g('lamas')),telos:Math.floor(g('telos')),velcro:Math.floor(g('velcro')),qty:q,kit:(sel&&sel.kits?sel.kits.map((k,i)=>Math.floor(g('kit'+i))):[]),
+  return {v:c?parseInt(c.value,10):0,ancho:g('ancho'),alto:g('alto'),ml:g('ml'),lamas:Math.floor(g('lamas')),telos:Math.floor(g('telos')),velcro:Math.floor(g('velcro')),qty:q,cas:(($('#form input[name=cas]:checked')||{}).value==='1'),kit:(sel&&sel.kits?sel.kits.map((k,i)=>Math.floor(g('kit'+i))):[]),
           extra:b('extra'),motor:b('motor'),riel:b('riel'),delicado:b('delicado')};
 }
 
@@ -458,6 +460,7 @@ function calc(p,c){
       r.detail=n2(c.ancho)+' × '+n2(c.alto)+' m = '+n2(a)+' m² ('+TIERN[t]+')';
       if(base==null){ r.derivar='Madera de menos de 1 m²: la cotiza el asesor.'; r.unit=0; break; }
       r.unit=base;
+      if(c.cas&&p.casetera){ r.unit+=Math.round(c.ancho*CASETERA); extras.push('casetera nueva '+n2(c.ancho)+' ML'); }
       if(c.extra&&p.extra){ r.unit+=p.extra.p; extras.push('cordón/escalerilla'); }
       addMotor(); break; }
     case 'vertesse':{
@@ -528,7 +531,7 @@ function specFor(p,c){
   switch(p.id){
     case 'enrollable': s.push('Lavado especializado de la tela'); if(v.n==='Con casetera') s.push('Pieza con casetera'); break;
     case 'romana': s.push('Lavado especializado de la tela'); break;
-    case 'sheer-e': s.push('Lavado especializado de la tela','Refilada cuando la tela viene deshilada'); break;
+    case 'sheer-e': s.push('Lavado especializado de la tela'); break;
     case 'sheer-r': s.push('Lavado especializado de la tela'); break;
     case 'vertesse': s.push('Lavado especializado de los velos verticales'); break;
     case 'celular': s.push(v.n.indexOf('Doble')===0?'Lavado especializado de velo y blackout':'Lavado especializado de la cortina celular (una capa)'); break;
@@ -545,6 +548,7 @@ function specFor(p,c){
   }
   if(c.extra&&p.extra) s.push('Mano de obra: '+p.extra.n.toLowerCase());
   (p.kits||[]).forEach((k,i)=>{ if(c.kit&&c.kit[i]) s.push(k.n+' ('+c.kit[i]+')'); });
+  if(c.cas&&p.casetera) s.push('Casetera nueva ('+n2(c.ancho)+' ML)');
   if(c.motor) s.push('Pieza motorizada');
   return s;
 }
